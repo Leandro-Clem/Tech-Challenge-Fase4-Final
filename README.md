@@ -301,7 +301,7 @@ Códigos usados: `400` validação (com `errors` por campo), `401` sem token / t
 
 ```bash
 cd backend && npm test        # 54 testes — auth, posts, comentários, CRUD de professores e alunos
-cd mobile  && npm test        # 70 testes — telas, contexto de autenticação, serviço, navegação
+cd mobile  && npm test        # 72 testes — telas, contexto de autenticação, serviço, navegação
 npm run test:coverage         # em qualquer um dos dois
 ```
 

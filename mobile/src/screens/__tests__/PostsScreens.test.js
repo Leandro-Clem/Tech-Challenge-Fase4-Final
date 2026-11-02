@@ -77,6 +77,45 @@ describe('HomeScreen (lista de posts)', () => {
     }
   });
 
+  test('buscar não mostra erro falso quando a requisição anterior é cancelada (Android)', async () => {
+    jest.useFakeTimers();
+    try {
+      // Imita o fetch do Android: ao cancelar, rejeita como falha de rede.
+      const androidLike = (value) => (_term, signal) =>
+        new Promise((resolve, reject) => {
+          const sig = typeof _term === 'object' ? _term : signal;
+          const timer = setTimeout(() => resolve(value), 50);
+          sig?.addEventListener('abort', () => {
+            clearTimeout(timer);
+            reject(new Error('Não foi possível falar com o servidor.'));
+          });
+        });
+      api.listPosts.mockImplementation(androidLike(posts));
+      api.searchPosts.mockImplementation(androidLike([posts[1]]));
+
+      await renderWithProviders(<HomeScreen navigation={makeNavigation()} />);
+      await act(async () => {
+        jest.advanceTimersByTime(60);
+      });
+      await screen.findByText('Fotossíntese em 5 minutos');
+
+      await fireEvent.changeText(screen.getByTestId('search-input'), 'fra');
+      await act(async () => {
+        jest.advanceTimersByTime(450);
+      });
+      await act(async () => {
+        jest.advanceTimersByTime(60);
+      });
+
+      expect(await screen.findByText('1 publicação encontrada para “fra”')).toBeOnTheScreen();
+      expect(screen.queryByText('Não foi possível falar com o servidor.')).toBeNull();
+      // e a busca vai à API uma única vez
+      expect(api.searchPosts).toHaveBeenCalledTimes(1);
+    } finally {
+      jest.useRealTimers();
+    }
+  });
+
   test('tocar num post abre a leitura', async () => {
     api.listPosts.mockResolvedValue(posts);
     const navigation = makeNavigation();

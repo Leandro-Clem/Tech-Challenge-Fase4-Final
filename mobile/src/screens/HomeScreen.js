@@ -42,7 +42,8 @@ export default function HomeScreen({ navigation }) {
           : await api.listPosts(controller.signal);
         setPosts(Array.isArray(data) ? data : []);
       } catch (err) {
-        if (err.name === 'AbortError') return;
+        // Uma requisição substituída por outra mais nova não é erro.
+        if (controller.signal.aborted || err.name === 'AbortError') return;
         setError(err.message);
         setPosts([]);
       } finally {
@@ -61,8 +62,12 @@ export default function HomeScreen({ navigation }) {
     return () => controllerRef.current?.abort();
   }, [load]);
 
-  // …e, silenciosamente, sempre que a tela volta a ficar visível
+  // …e, silenciosamente, quando a tela VOLTA a ficar visível
   // (ex.: depois de publicar ou excluir um post em outra tela).
+  // O efeito lê a versão atual de `load` por uma ref e só depende do foco:
+  // assim, mudar a busca não dispara uma segunda carga em paralelo.
+  const loadRef = useRef(load);
+  loadRef.current = load;
   const firstFocus = useRef(true);
   useFocusEffect(
     useCallback(() => {
@@ -70,8 +75,8 @@ export default function HomeScreen({ navigation }) {
         firstFocus.current = false;
         return;
       }
-      load({ silent: true });
-    }, [load]),
+      loadRef.current({ silent: true });
+    }, []),
   );
 
   const header = (

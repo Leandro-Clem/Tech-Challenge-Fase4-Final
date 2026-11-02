@@ -65,6 +65,16 @@ describe('services/api', () => {
     await expect(api.listPosts()).rejects.toMatchObject({ status: 0 });
   });
 
+  test('cancelamento relatado como falha de rede (Android) vira AbortError', async () => {
+    const controller = new AbortController();
+    global.fetch = jest.fn(() => {
+      controller.abort();
+      return Promise.reject(new TypeError('Network request failed'));
+    });
+
+    await expect(api.searchPosts('fra', controller.signal)).rejects.toMatchObject({ name: 'AbortError' });
+  });
+
   test('a busca codifica o termo', async () => {
     respond(200, []);
     await api.searchPosts('ciências & artes');

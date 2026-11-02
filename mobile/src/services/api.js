@@ -75,7 +75,14 @@ export async function request(path, { method = 'GET', body, auth = false, signal
       body: body !== undefined ? JSON.stringify(body) : undefined,
     });
   } catch (error) {
-    if (error?.name === 'AbortError') throw error;
+    // Requisição cancelada de propósito (a tela saiu ou uma busca nova substituiu a anterior).
+    // No Android o fetch do React Native pode relatar o cancelamento como
+    // "Network request failed"; por isso olhamos o sinal, e não o nome do erro.
+    if (signal?.aborted || error?.name === 'AbortError') {
+      const aborted = new Error('Requisição cancelada');
+      aborted.name = 'AbortError';
+      throw aborted;
+    }
     throw new ApiError(
       `Não foi possível falar com o servidor (${API_URL}). Verifique se a API está no ar e se o celular está na mesma rede.`,
       0,
