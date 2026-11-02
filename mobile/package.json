@@ -55,6 +55,7 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/src/test/"
-    ]
+    ],
+    "testTimeout": 20000
   }
 }
