@@ -1,0 +1,50 @@
+{
+  "name": "tech-challenge-blog-api",
+  "version": "2.0.0",
+  "description": "API REST da plataforma de blogging de professores - Tech Challenge Fase 4 (FIAP Pós Full Stack Development). Evolução da API da Fase 2 com usuários, senha e CRUD de professores e alunos.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "seed": "node src/seed.js --reset",
+    "test": "jest --runInBand",
+    "test:coverage": "jest --runInBand --coverage"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "sequelize",
+    "jwt",
+    "bcrypt",
+    "rest-api",
+    "fiap"
+  ],
+  "author": "Leandro Clemente",
+  "license": "ISC",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "setupFiles": [
+      "<rootDir>/tests/env.js"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/seed.js"
+    ]
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "sequelize": "^6.37.7",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.1.0"
+  }
+}

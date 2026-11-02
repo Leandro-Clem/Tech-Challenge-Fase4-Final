@@ -1,0 +1,16 @@
+services:
+  api:
+    build: ./backend
+    container_name: blog-api
+    ports:
+      - "3000:3000"
+    environment:
+      JWT_SECRET: ${JWT_SECRET:-troque-esta-chave}
+      JWT_EXPIRES_IN: 8h
+      SEED_ON_START: "true"
+    volumes:
+      - blog-data:/data
+    restart: unless-stopped
+
+volumes:
+  blog-data:

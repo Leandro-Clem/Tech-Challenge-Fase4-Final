@@ -1,0 +1,28 @@
+# Dependências — NUNCA versionar (apontamento da Fase 3)
+node_modules/
+
+# Banco de dados local e relatórios de teste
+*.sqlite
+coverage/
+
+# Variáveis de ambiente
+.env
+.env.local
+.env*.local
+
+# Expo / builds
+.expo/
+dist/
+web-build/
+/mobile/ios/
+/mobile/android/
+
+# Logs
+npm-debug.log*
+*.log
+
+# Sistema operacional e editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
