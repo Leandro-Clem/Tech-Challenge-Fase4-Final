@@ -3,7 +3,7 @@
 Aplicativo **React Native (Expo)** da plataforma de blogging de professores da rede pública, consumindo a API REST em Node.js construída nas fases anteriores — agora evoluída com **usuários reais, senha e administração de professores e alunos**.
 
 **Aluno:** Leandro Clemente — Pós-Graduação em Full Stack Development (FIAP / POSTECH)
-**Repositório:** https://github.com/Leandro-Clem/Tech-Challenge-Fase4 <!-- confirme o link -->
+**Repositório:** https://github.com/Leandro-Clem/Tech-Challenge-Fase4-Final <!-- confirme o link -->
 **Apresentação em vídeo:** _adicionar link do YouTube (não listado)_
 
 ---
