@@ -4,7 +4,7 @@ Aplicativo **React Native (Expo)** da plataforma de blogging de professores da r
 
 **Aluno:** Leandro Clemente — Pós-Graduação em Full Stack Development (FIAP / POSTECH)
 **Repositório:** https://github.com/Leandro-Clem/Tech-Challenge-Fase4-Final <!-- confirme o link -->
-**Apresentação em vídeo:**
+**Apresentação em vídeo:** https://youtu.be/vjj8h0_UT58
 
 ---
 
